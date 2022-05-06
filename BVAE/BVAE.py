@@ -436,8 +436,9 @@ class BetaVAE(LightningModule):
         loss_dict = self.loss_function(recon_x, x, mu, log_var)
         loss_dict["recon_acc"] = recon_acc
 
-        self.log("ptl/train_loss", loss_dict["loss"], on_step=False, on_epoch=True, prog_bar=True, logger=True, batch_size=self.batch_size)
-        self.log("ptl/train_recon_acc", recon_acc, on_step=False, on_epoch=True, prog_bar=True, logger=True, batch_size=self.batch_size)
+        # if using different versions of pytorch lightning, it might be necessary to add into self.log functions also "batch_size=self.batch_size" specification.
+        self.log("ptl/train_loss", loss_dict["loss"], on_step=False, on_epoch=True, prog_bar=True, logger=True)
+        self.log("ptl/train_recon_acc", recon_acc, on_step=False, on_epoch=True, prog_bar=True, logger=True)
         return loss_dict
 
 
@@ -473,8 +474,9 @@ class BetaVAE(LightningModule):
         loss_dict = self.loss_function(recon_x, x, mu, log_var)
         loss_dict["recon_acc"] = recon_acc
 
-        self.log("ptl/val_loss", loss_dict["loss"], on_step=False, on_epoch=True, prog_bar=True, logger=True, batch_size=self.batch_size)
-        self.log("ptl/val_recon_acc", recon_acc, on_step=False, on_epoch=True, prog_bar=True, logger=True, batch_size=self.batch_size)
+        # if using different versions of pytorch lightning, it might be necessary to add into self.log functions also "batch_size=self.batch_size" specification.
+        self.log("ptl/val_loss", loss_dict["loss"], on_step=False, on_epoch=True, prog_bar=True, logger=True)
+        self.log("ptl/val_recon_acc", recon_acc, on_step=False, on_epoch=True, prog_bar=True, logger=True)
         return loss_dict
 
     def validaction_epoch_end(self, outputs):
